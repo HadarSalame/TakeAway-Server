@@ -1,0 +1,24 @@
+{
+  "name": "TakeAway-Server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "start": "nodemon App"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HadarSalame/TakeAway-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HadarSalame/TakeAway-Server/issues"
+  },
+  "homepage": "https://github.com/HadarSalame/TakeAway-Server#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
