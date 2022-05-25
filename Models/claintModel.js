@@ -7,7 +7,11 @@ const ClaintSchema=mongoose.Schema({
     claintPhone:{type:Number,require},
     claintEmail:{type:String,require},
     password:{type:String,minlegnth:8,require},
-    
+    orders:[
+        {type:mongoose.Schema.Types.ObjectId,ref:'Order'}
+    ]
 
 
 })
+
+module.exports = mongoose.model("Claint", ClaintSchema)
