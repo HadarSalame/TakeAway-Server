@@ -9,7 +9,7 @@ const CreateClaint = async (req, res) => {
     let claint = req.body.claint
     try{
 
-        let CreateClaint =await new userModel(claint)
+        let CreateClaint =await new claintModel(claint)
         await CreateClaint.save()
         res.send("Added successfully")
     }
@@ -21,8 +21,8 @@ const CreateClaint = async (req, res) => {
 
 //התחברות ללקוח
 const claintLogin = (req, res) => {
-    let name = req.params.name
-    let pass = req.params.pass
+    let name = req.params.claintName
+    let pass = req.params.password
     claintLogin.findOne({ claintName: name, password: pass }).then((response) => {
         res.send("Login successfully")
 
@@ -69,9 +69,9 @@ const UpdateClaintPhone = (req, res) => {
 
 //עדכון המייל
 const UpdateClaintEmail = (req, res) => {
-    let phone = req.params.claintEmail;
-    let newPhone = req.body.claintEmail
-    claintModel.findOneAndUpdate({ claintEmail: phone}, { claintEmail: newPhone }).then((response) => {
+    let email = req.params.claintEmail;
+    let newemail = req.body.claintEmail
+    claintModel.findOneAndUpdate({ claintEmail: email}, { claintEmail: newemail }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -81,9 +81,9 @@ const UpdateClaintEmail = (req, res) => {
 
 //עדכון סיסמה
 const UpdateClaintPassword = (req, res) => {
-    let phone = req.params.claintEmail;
-    let newPhone = req.body.claintEmail
-    claintModel.findOneAndUpdate({ claintEmail: phone}, { claintEmail: newPhone }).then((response) => {
+    let pass = req.params.password;
+    let newpass = req.body.password
+    claintModel.findOneAndUpdate({ password: pass}, { password: newpass }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -91,5 +91,7 @@ const UpdateClaintPassword = (req, res) => {
     })
 }
 
-module.exports={CreateClaint,claintLogin,UpdateClaintName,UpdateClaintLastName,UpdateClaintPhone,UpdateClaintEmail}
+//אימות סיסמה
+
+module.exports={CreateClaint,claintLogin,UpdateClaintName,UpdateClaintLastName,UpdateClaintPhone,UpdateClaintEmail,UpdateClaintPassword}
 
