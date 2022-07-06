@@ -6,15 +6,21 @@ const { model } = require('mongoose');
 
 //לקוח חדש
 const CreateBusiness = async (req, res) => {
-    let business = req.body.business
-    try{
+    console.log("++++++++++++++++++++++++++++++++++")
+    let business = req.body
+    try{ 
 
-        let CreateBusiness =await new BusinessModel(business)
-        await CreateBusiness.save()
+        let Business =await new BusinessModel(business)
+        await Business.save()
         res.send("Added successfully")
+    console.log("sucssec")
+
     }
     catch(e){
-        res.send(e)
+        res.status(400).send(e)
+    console.log("erore"+e)
+ 
+
     }
 
 }

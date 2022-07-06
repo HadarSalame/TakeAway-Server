@@ -9,8 +9,8 @@ const BusinessSchema=mongoose.Schema({
     businessAddress:{type:String,require},
     businesspassword:{type:String,minlegnth:8,require},
     businessKosher:{type:String,require},
-    businessKosherCertificate:{type:File,require},
-    logoBusiness:{type:File,require},
+    businessKosherCertificate:{type:String,require},
+    logoBusiness:{type:String,require},
     orders:[
         {type:mongoose.Schema.Types.ObjectId,ref:'Order'}
     ]
