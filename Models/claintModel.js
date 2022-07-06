@@ -11,7 +11,7 @@ const ClaintSchema=mongoose.Schema({
         {type:mongoose.Schema.Types.ObjectId,ref:'Order'}
     ]
 
-
+ 
 })
 
 module.exports = mongoose.model("Claint", ClaintSchema)
