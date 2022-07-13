@@ -4,6 +4,7 @@ const categoryModel=require('../Models/categoryModel');
 const portionModel=require('../Models/portionModel');
 const { model } = require('mongoose');
 
+
 //לקוח חדש
 const CreateBusiness = async (req, res) => {
     console.log("++++++++++++++++++++++++++++++++++")
@@ -31,7 +32,7 @@ const BusinessLogin = (req, res) => {
     let id = req.params.businessID
     let email = req.params.businessEmail
     let pass = req.params.businesspassword
-    claintLogin.findOne({ businessID: id,businessEmail:email ,businesspassword: pass }).then((response) => {
+    BusinessModel.findOne({ businessID: id,businessEmail:email ,businesspassword: pass }).then((response) => {
         res.send("Login successfully")
 
     }).catch((error) => {
@@ -43,7 +44,7 @@ const BusinessLogin = (req, res) => {
 const UpdatebusinessName = (req, res) => {
     let name = req.params.businessName
     let newName = req.body.businessName
-    claintModel.findOneAndUpdate({ businessName: name }, { businessName: newName }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessName: name }, { businessName: newName }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -55,7 +56,7 @@ const UpdatebusinessName = (req, res) => {
 const UpdatebusinessOwnerName = (req, res) => {
     let Oname = req.params.businessOwnerNamestName
     let newOName = req.body.businessOwnerName
-    claintModel.findOneAndUpdate({ businessOwnerName: Oname}, { businessOwnerName: newOName }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessOwnerName: Oname}, { businessOwnerName: newOName }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -67,7 +68,7 @@ const UpdatebusinessOwnerName = (req, res) => {
 const UpdatebusinessPhone = (req, res) => {
     let phone = req.params.businessPhone;
     let newPhone = req.body.businessPhone
-    claintModel.findOneAndUpdate({ businessPhone: phone}, { businessPhone: newPhone }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessPhone: phone}, { businessPhone: newPhone }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -78,7 +79,7 @@ const UpdatebusinessPhone = (req, res) => {
 const UpdatebusinessAddress = (req, res) => {
     let phone = req.params.businessAddress;
     let newPhone = req.body.businessAddress
-    claintModel.findOneAndUpdate({ businessAddress: phone}, { businessAddress: newPhone }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessAddress: phone}, { businessAddress: newPhone }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -90,7 +91,7 @@ const UpdatebusinessAddress = (req, res) => {
 const UpdatebusinessEmail = (req, res) => {
     let email = req.params.businessEmail;
     let newemail = req.body.businessEmail
-    claintModel.findOneAndUpdate({ businessEmail: email}, { businessEmail: newemail }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessEmail: email}, { businessEmail: newemail }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -102,7 +103,7 @@ const UpdatebusinessEmail = (req, res) => {
 const UpdatebusinessPassword = (req, res) => {
     let pass = req.params.businesspassword;
     let newpass = req.body.businesspassword
-    claintModel.findOneAndUpdate({ businesspassword: pass}, { businesspassword: newpass }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businesspassword: pass}, { businesspassword: newpass }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {

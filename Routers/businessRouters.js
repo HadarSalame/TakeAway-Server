@@ -2,7 +2,7 @@ const router=require('express').Router()
 const businessController =require('../Controllers/businessController')
 
 router.post('/CreateBusiness',businessController.CreateBusiness);
-router.get('/BusinessLogin',businessController.BusinessLogin);
+router.get('/BusinessLogin/:businessID/:businessEmail/:businesspassword',businessController.BusinessLogin);
 router.get('/UpdatebusinessName/:name',businessController.UpdatebusinessName);
 router.get('/UpdatebusinessOwnerName',businessController.UpdatebusinessOwnerName);
 router.get('/UpdatebusinessPhone',businessController.UpdatebusinessPhone);
