@@ -75,7 +75,13 @@ const BusinessLogin = (req, res) => {
     let email = req.params.businessEmail
     let pass = req.params.businesspassword
     BusinessModel.findOne({ businessID: id,businessEmail:email ,businesspassword: pass }).then((response) => {
-        res.send("Login successfully")
+        console.log(response)
+        if(response==null){
+            res.send("null")
+        }
+        else{
+            res.send(true)
+        }
 
     }).catch((error) => {
         res.send('error :' + error)
