@@ -2,6 +2,9 @@ const router=require('express').Router()
 const categoryController =require('../Controllers/categoryController')
 
 router.post('/CreateCategory',categoryController.CreateCategory);
+router.get('/getCategory',categoryController.getCategory);
+
+
 // router.get('/BusinessLogin',businessController.BusinessLogin);
 // router.get('/UpdatebusinessName/:name',businessController.UpdatebusinessName);
 // router.get('/UpdatebusinessOwnerName',businessController.UpdatebusinessOwnerName);

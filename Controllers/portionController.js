@@ -1,9 +1,8 @@
 const { model } = require('mongoose');
 const portionModel=require('../Models/portionModel');
 
-
+//יצירת מנה חדשה
 const CreatePortion = async (req, res) => {
-    console.log("++++++++++++++++++++++++++++++++++")
 
     try{ 
 
@@ -21,4 +20,15 @@ const CreatePortion = async (req, res) => {
     }
 
 }
-module.exports={CreatePortion}
+
+//  שליפת כל המנות 
+const getPortion= async function (req, res, next) {
+    try {
+        const users = await portionModel.find();
+        res.send(users);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+module.exports={CreatePortion,getPortion}

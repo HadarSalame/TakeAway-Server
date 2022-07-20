@@ -23,6 +23,12 @@ App.use('/category', categoryRouters)
 const claintRouters = require("./Routers/claintRouters")
 App.use('/claint', claintRouters)
 
+const orderRouters = require("./Routers/orderRouters")
+App.use('/order',orderRouters )
+
+const bidsRouters = require("./Routers/bidsRouters")
+App.use('/bid', bidsRouters)
+
 
 // router
 

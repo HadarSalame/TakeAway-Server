@@ -16,9 +16,18 @@ const CreateCategory = async (req, res) => {
     catch(e){
         res.status(400).send(e)
     console.log("erore"+e)
- 
-
     }
-
 }
-module.exports={CreateCategory}
+    // שליפת כל הקטגוריות
+const getCategory= async function (req, res, next) {
+    try {
+        const users = await categoryModel.find();
+        res.send(users);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+module.exports={CreateCategory,getCategory}

@@ -6,7 +6,8 @@ const { model } = require('mongoose');
 
 //משתמש חדש
 const CreateClaint = async (req, res) => {
-    let claint = req.body.claint
+    let claint = req.body
+    console.log(claint)
     try {
 
         let CreateClaint = await new claintModel(claint)
@@ -18,6 +19,50 @@ const CreateClaint = async (req, res) => {
     }
 
 }
+//מחיקת לקוח
+const DeleteClaintById = async (req, res)=> {
+    console.log("oooooooooooooo")
+    try {
+        const id = req.params.id;
+        console.log(id)
+        const claint = await claintModel.findOneAndDelete(id);
+        console.log(claint)
+        res.send(claint);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+// שליפת כל הלקוחות
+const getClaint = async function (req, res, next) {
+    try {
+        const users = await claintModel.find();
+        res.send(users);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+//שליפת לקוח ע"פ מייל
+const getClaintByEmail = async function (req, res, next) {
+    try {
+        const email = req.params.email;
+        const user = await claintModel.findOne({ claintEmail: email });
+        console.log(user);
+        res.send(user);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+
+
+
+
 
 //התחברות ללקוח
 const claintLogin = (req, res) => {
@@ -93,5 +138,5 @@ const UpdateClaintPassword = (req, res) => {
 
 //אימות סיסמה
 
-module.exports = { CreateClaint, claintLogin, UpdateClaintName, UpdateClaintLastName, UpdateClaintPhone, UpdateClaintEmail, UpdateClaintPassword }
+module.exports = { CreateClaint,DeleteClaintById,getClaint,getClaintByEmail,   claintLogin, UpdateClaintName, UpdateClaintLastName, UpdateClaintPhone, UpdateClaintEmail, UpdateClaintPassword }
 

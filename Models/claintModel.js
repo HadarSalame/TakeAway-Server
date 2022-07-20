@@ -1,7 +1,7 @@
 const mongoose= require('mongoose')
 
 const ClaintSchema=mongoose.Schema({
-    claintID:{type:Number},
+    // claintID:{type:Number},
     claintFirstName:{type:String,require},
     claintLastName:{type:String,require},
     claintPhone:{type:Number,require},

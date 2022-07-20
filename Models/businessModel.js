@@ -1,7 +1,7 @@
 const mongoose= require('mongoose')
 
 const BusinessSchema=mongoose.Schema({
-    businessID:{type:Number},
+    // businessID:{type:Number},
     businessName:{type:String,require},
     businessOwnerName:{type:String,require},
     businessPhone:{type:Number,require},

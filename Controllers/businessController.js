@@ -7,7 +7,7 @@ const { model } = require('mongoose');
 
 //לקוח חדש
 const CreateBusiness = async (req, res) => {
-    console.log("++++++++++++++++++++++++++++++++++")
+
     let business = req.body
     try{ 
 
@@ -25,6 +25,48 @@ const CreateBusiness = async (req, res) => {
     }
 
 }
+//מחיקת מנהל
+const DeleteBusinessyId = async (req, res)=> {
+    try {
+        const id = req.params.id;
+        const B = await BusinessModel.findOneAndDelete(id);
+   
+        res.send(B);
+    }
+    catch (error) {
+        console.log(error);
+    }
+
+}
+
+// שליפת כל המנהלים
+const getBusiness= async function (req, res, next) {
+    try {
+        const users = await BusinessModel.find();
+        res.send(users);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+//שליפת מנהל ע"פ מייל
+const getBusinessByEmail = async function (req, res, next) {
+  try {
+       
+        const email = req.params.email;
+        const user = await BusinessModel.findOne({ businessEmail: email });
+        console.log(user);
+        res.send(user);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+
+
+
+
 
 //התחברות לעסק
 
@@ -116,4 +158,4 @@ const UpdatebusinessPassword = (req, res) => {
 //לוגו
 
 
-module.exports={CreateBusiness,BusinessLogin,UpdatebusinessName,UpdatebusinessOwnerName,UpdatebusinessPhone,UpdatebusinessEmail,UpdatebusinessPassword,UpdatebusinessAddress};
+module.exports={CreateBusiness,DeleteBusinessyId,getBusiness,getBusinessByEmail,    BusinessLogin,UpdatebusinessName,UpdatebusinessOwnerName,UpdatebusinessPhone,UpdatebusinessEmail,UpdatebusinessPassword,UpdatebusinessAddress};

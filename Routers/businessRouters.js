@@ -2,6 +2,10 @@ const router=require('express').Router()
 const businessController =require('../Controllers/businessController')
 
 router.post('/CreateBusiness',businessController.CreateBusiness);
+router.delete('/deleteBusiness/:id', businessController.DeleteBusinessyId);
+router.get('/getBusiness',businessController.getBusiness)
+router.get('/getBusinessByEmail/:email',businessController.getBusinessByEmail)
+
 router.get('/BusinessLogin/:businessID/:businessEmail/:businesspassword',businessController.BusinessLogin);
 router.get('/UpdatebusinessName/:name',businessController.UpdatebusinessName);
 router.get('/UpdatebusinessOwnerName',businessController.UpdatebusinessOwnerName);
