@@ -20,7 +20,7 @@ const CreateClaint = async (req, res) => {
 
 }
 //מחיקת לקוח
-const DeleteClaintById = async (req, res)=> {
+const DeleteClaintById = async (req, res) => {
     console.log("oooooooooooooo")
     try {
         const id = req.params.id;
@@ -66,10 +66,16 @@ const getClaintByEmail = async function (req, res, next) {
 
 //התחברות ללקוח
 const claintLogin = (req, res) => {
-    let email = req.params.claintName
+    let email = req.params.claintEmail
     let pass = req.params.password
-    claintLogin.findOne({ claintName: name, password: pass }).then((response) => {
-        res.send("Login successfully")
+    claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
+        console.log(response)
+        if (response == null) {
+            res.send("null")
+        }
+        else {
+            res.send(true)
+        }
 
     }).catch((error) => {
         res.send('error :' + error)
@@ -138,5 +144,5 @@ const UpdateClaintPassword = (req, res) => {
 
 //אימות סיסמה
 
-module.exports = { CreateClaint,DeleteClaintById,getClaint,getClaintByEmail,   claintLogin, UpdateClaintName, UpdateClaintLastName, UpdateClaintPhone, UpdateClaintEmail, UpdateClaintPassword }
+module.exports = { CreateClaint, DeleteClaintById, getClaint, getClaintByEmail, claintLogin, UpdateClaintName, UpdateClaintLastName, UpdateClaintPhone, UpdateClaintEmail, UpdateClaintPassword }
 

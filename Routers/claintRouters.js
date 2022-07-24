@@ -7,7 +7,7 @@ router.get('/getClaint', claintController.getClaint);
 router.get('/getClaintByEmail/:email', claintController.getClaintByEmail);
 
 
-router.get('/claintLogin/:email/:pass',claintController.claintLogin);
+router.get('/claintLogin/:claintEmail/:password',claintController.claintLogin);
 router.get('/UpdateClaintName/:name',claintController.UpdateClaintName);
 router.get('/UpdateClaintLastName/:Lname',claintController.UpdateClaintLastName);
 router.get('/UpdateClaintPhone/:phone',claintController.UpdateClaintPhone);

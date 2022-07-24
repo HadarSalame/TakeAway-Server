@@ -4,6 +4,7 @@ const env = require('dotenv');
 env.config();
 const path = require("path")
 const cors =require("cors")
+App.use(cors)
 const bodyParser = require("body-parser")
 App.use(bodyParser.json())
 const mongoose = require('mongoose')
