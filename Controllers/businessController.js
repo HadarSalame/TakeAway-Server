@@ -1,7 +1,7 @@
-const claintModel=require('../Models/claintModel');
-const BusinessModel=require('../Models/businessModel');
-const categoryModel=require('../Models/categoryModel');
-const portionModel=require('../Models/portionModel');
+const claintModel = require('../Models/claintModel');
+const BusinessModel = require('../Models/businessModel');
+const categoryModel = require('../Models/categoryModel');
+const portionModel = require('../Models/portionModel');
 const { model } = require('mongoose');
 
 
@@ -9,28 +9,28 @@ const { model } = require('mongoose');
 const CreateBusiness = async (req, res) => {
 
     let business = req.body
-    try{ 
+    try {
 
-        let Business =await new BusinessModel(business)
+        let Business = await new BusinessModel(business)
         await Business.save()
         res.send("Added successfully")
-    console.log("sucssec")
+        console.log("sucssec")
 
     }
-    catch(e){
+    catch (e) {
         res.status(400).send(e)
-    console.log("erore"+e)
- 
+        console.log("erore" + e)
+
 
     }
 
 }
 //מחיקת מנהל
-const DeleteBusinessyId = async (req, res)=> {
+const DeleteBusinessyId = async (req, res) => {
     try {
         const id = req.params.id;
         const B = await BusinessModel.findOneAndDelete(id);
-   
+
         res.send(B);
     }
     catch (error) {
@@ -40,7 +40,7 @@ const DeleteBusinessyId = async (req, res)=> {
 }
 
 // שליפת כל המנהלים
-const getBusiness= async function (req, res, next) {
+const getBusiness = async function (req, res, next) {
     try {
         const users = await BusinessModel.find();
         res.send(users);
@@ -51,8 +51,8 @@ const getBusiness= async function (req, res, next) {
 }
 //שליפת מנהל ע"פ מייל
 const getBusinessByEmail = async function (req, res, next) {
-  try {
-       
+    try {
+
         const email = req.params.email;
         const user = await BusinessModel.findOne({ businessEmail: email });
         console.log(user);
@@ -74,12 +74,14 @@ const BusinessLogin = (req, res) => {
     let id = req.params.businessID
     let email = req.params.businessEmail
     let pass = req.params.businesspassword
-    BusinessModel.findOne({ businessID: id,businessEmail:email ,businesspassword: pass }).then((response) => {
+    BusinessModel.findOne({ businessID: id, businessEmail: email, businesspassword: pass }).then((response) => {
+        console.log("login");
+
         console.log(response)
-        if(response==null){
+        if (response == null) {
             res.send("null")
         }
-        else{
+        else {
             res.send(true)
         }
 
@@ -104,7 +106,7 @@ const UpdatebusinessName = (req, res) => {
 const UpdatebusinessOwnerName = (req, res) => {
     let Oname = req.params.businessOwnerNamestName
     let newOName = req.body.businessOwnerName
-    BusinessModel.findOneAndUpdate({ businessOwnerName: Oname}, { businessOwnerName: newOName }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessOwnerName: Oname }, { businessOwnerName: newOName }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -116,7 +118,7 @@ const UpdatebusinessOwnerName = (req, res) => {
 const UpdatebusinessPhone = (req, res) => {
     let phone = req.params.businessPhone;
     let newPhone = req.body.businessPhone
-    BusinessModel.findOneAndUpdate({ businessPhone: phone}, { businessPhone: newPhone }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessPhone: phone }, { businessPhone: newPhone }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -127,7 +129,7 @@ const UpdatebusinessPhone = (req, res) => {
 const UpdatebusinessAddress = (req, res) => {
     let phone = req.params.businessAddress;
     let newPhone = req.body.businessAddress
-    BusinessModel.findOneAndUpdate({ businessAddress: phone}, { businessAddress: newPhone }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessAddress: phone }, { businessAddress: newPhone }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -139,7 +141,7 @@ const UpdatebusinessAddress = (req, res) => {
 const UpdatebusinessEmail = (req, res) => {
     let email = req.params.businessEmail;
     let newemail = req.body.businessEmail
-    BusinessModel.findOneAndUpdate({ businessEmail: email}, { businessEmail: newemail }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businessEmail: email }, { businessEmail: newemail }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -151,7 +153,7 @@ const UpdatebusinessEmail = (req, res) => {
 const UpdatebusinessPassword = (req, res) => {
     let pass = req.params.businesspassword;
     let newpass = req.body.businesspassword
-    BusinessModel.findOneAndUpdate({ businesspassword: pass}, { businesspassword: newpass }).then((response) => {
+    BusinessModel.findOneAndUpdate({ businesspassword: pass }, { businesspassword: newpass }).then((response) => {
         res.send(`hello!! ${response} updated successfully`)
 
     }).catch((error) => {
@@ -164,4 +166,4 @@ const UpdatebusinessPassword = (req, res) => {
 //לוגו
 
 
-module.exports={CreateBusiness,DeleteBusinessyId,getBusiness,getBusinessByEmail,    BusinessLogin,UpdatebusinessName,UpdatebusinessOwnerName,UpdatebusinessPhone,UpdatebusinessEmail,UpdatebusinessPassword,UpdatebusinessAddress};
+module.exports = { CreateBusiness, DeleteBusinessyId, getBusiness, getBusinessByEmail, BusinessLogin, UpdatebusinessName, UpdatebusinessOwnerName, UpdatebusinessPhone, UpdatebusinessEmail, UpdatebusinessPassword, UpdatebusinessAddress };

@@ -4,7 +4,14 @@ const env = require('dotenv');
 env.config();
 const path = require("path")
 const cors =require("cors")
-App.use(cors)
+// App.use(cors) 
+
+
+App.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 const bodyParser = require("body-parser")
 App.use(bodyParser.json())
 const mongoose = require('mongoose')
@@ -23,7 +30,7 @@ App.use('/category', categoryRouters)
 
 const claintRouters = require("./Routers/claintRouters")
 App.use('/claint', claintRouters)
-
+ 
 const orderRouters = require("./Routers/orderRouters")
 App.use('/order',orderRouters )
 

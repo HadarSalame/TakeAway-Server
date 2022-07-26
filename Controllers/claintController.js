@@ -66,6 +66,7 @@ const getClaintByEmail = async function (req, res, next) {
 
 //התחברות ללקוח
 const claintLogin = (req, res) => {
+    console.log("login");
     let email = req.params.claintEmail
     let pass = req.params.password
     claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
