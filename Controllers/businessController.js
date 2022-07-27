@@ -64,7 +64,7 @@ const getBusinessByEmail = async function (req, res, next) {
 }
 
 
-
+//שליפה לפי תאריך אם הוא פנוי
 
 
 
