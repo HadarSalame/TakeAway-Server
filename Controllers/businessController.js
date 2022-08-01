@@ -2,8 +2,10 @@ const claintModel = require('../Models/claintModel');
 const BusinessModel = require('../Models/businessModel');
 const categoryModel = require('../Models/categoryModel');
 const portionModel = require('../Models/portionModel');
-const { model } = require('mongoose');
-
+const OrderModel = require('../Models/orderModel');
+const businessModel = require('../Models/businessModel');
+const bidsModel = require('../Models/bidsModel');
+const orderModel = require('../Models/orderModel');
 
 //לקוח חדש
 const CreateBusiness = async (req, res) => {
@@ -65,7 +67,46 @@ const getBusinessByEmail = async function (req, res, next) {
 
 
 //שליפה לפי תאריך אם הוא פנוי
+//בדיקה של ההזמנות מי יש לו את התאריך הזה, 
+//שליפה של ההצעות לכל אחד מההזמנות האלה
+//אם יש אחת ההצעות סטטוס סגור - את העסק שסגר איתו להוריד מהרשימה
+const IsClear = (req, res) => {
+    let date = req.params.date
+    let bus = [];
+    bidsModel.find({ status: true }).then((ress) => {
+        ress.forEach(element => {
+            let temp = orderModel.findOne({ bids: { _id: element._id } })
+            if (temp.eventDate == date) {
+                bus.push(element.business)
+            }
+            console.log(temp);
 
+        });
+    })
+    businessModel.find({ _id: { $nin: [bus] } }).then((r) =>
+        r.send()
+    ).catch((error) => {
+        res.send('error :' + error)
+    })
+
+
+
+
+    // OrderModel.find({ eventDate: date, bids: { status: true } }).then((ress) => {
+    //     console.log(ress);
+    //     ress.forEach(element => {
+    //         for (let index = 0; index < ress.length; index++) {
+    //             if (ress[index].bids.status == true)
+
+    //         } (element.bids)
+
+    //     });
+    //     let b = businessModel.find()
+
+    // })
+
+
+}
 
 
 //התחברות לעסק

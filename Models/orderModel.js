@@ -2,7 +2,7 @@ const mongoose= require('mongoose')
 
 const OrderSchema=mongoose.Schema({
     // ordertID:{type:Number},
-    // businessID:{type:String,require},
+    // businessID:{type:String},
     claintID:{type:String,require},
     orderDate:{type:Date},
     eventDate:{type:Date,require},

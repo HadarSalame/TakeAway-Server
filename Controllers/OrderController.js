@@ -1,7 +1,7 @@
 const orderModel = require('../Models/orderModel');
 const { model } = require('mongoose');
 
-//משתמש חדש
+//הזמנה חדשה
 const CreateOrder = async (req, res) => {
     let order = req.body
 console.log("uuu")
