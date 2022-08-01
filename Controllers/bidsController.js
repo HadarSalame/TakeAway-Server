@@ -1,5 +1,7 @@
 const bidsModel = require('../Models/bidsModel');
+const orderModel = require('../Models/orderModel');
 const { model } = require('mongoose');
+const { create } = require('../Models/orderModel');
 
 //הצעת מחיר חדש
 const CreateBid = async (req, res) => {
@@ -8,7 +10,14 @@ const CreateBid = async (req, res) => {
 
         let Create = await new bidsModel(Bids)
         await Create.save()
-        res.send("Added successfully")
+
+        const idorder= Create.order;
+        const orderbid = await orderModel.findOne({ _id: idorder });
+        console.log(orderbid)
+        orderbid.bids.push(Create)
+        const updated = await orderModel.findByIdAndUpdate(idorder, orderbid, { new: true });
+      
+        res.send(updated)
     }
     catch (e) {
         res.send(e)
@@ -38,8 +47,21 @@ const getbidsByOrder = async function (req, res, next) {
           next(error);
       }
   }
-  
+  //עדכון הזמנה ע"פ id לצורך עדכון הסטאטוס-
+const updatBidsById = async function (req, res, next) {
+    console.log("in update");
+    try {
+        const id = req.params.id;
+        const bids = req.body;
+        const updated = await bidsModel.findByIdAndUpdate(id, bids, { new: true });
+        res.send(updated);
+    }
+    catch (error) {
+        next(error);
+    }
+}
 
 
-module.exports = { CreateBid,DeleteBidById,getbidsByOrder }
+
+module.exports = { CreateBid,DeleteBidById,getbidsByOrder,updatBidsById }
 

@@ -3,7 +3,7 @@ const mongoose= require('mongoose')
 const OrderSchema=mongoose.Schema({
     // ordertID:{type:Number},
     // businessID:{type:String},
-    claintID:{type:String,require},
+    claintID: {type:mongoose.Schema.Types.ObjectId,ref:'Claint'},
     orderDate:{type:Date},
     eventDate:{type:Date,require},
     portion:[
@@ -15,5 +15,6 @@ const OrderSchema=mongoose.Schema({
     ],
 
 })
+
 
 module.exports = mongoose.model("Order", OrderSchema)
