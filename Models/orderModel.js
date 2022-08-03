@@ -13,6 +13,7 @@ const OrderSchema=mongoose.Schema({
     bids:[
         {type:mongoose.Schema.Types.ObjectId,ref:'Bids'}
     ],
+    StatusOrder:{type:Boolean}
 
 })
 

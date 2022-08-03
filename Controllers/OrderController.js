@@ -48,6 +48,17 @@ const getOrders= async function (req, res, next) {
         next(error);
     }
 }
+// שליפת כל ההזמנות שעדין לא נענו 
+const getOrdersFalse= async function (req, res, next) {
+    try {
+        const users = await orderModel.find({StatusOrder:false});
+        res.send(users);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
 //שליפת הזמנות ע"פ קוד לקוח
 const getOrderById = async function (req, res, next) {
     try {
@@ -69,5 +80,5 @@ const getOrderById = async function (req, res, next) {
 
 
 
-module.exports = { CreateOrder,DeleteOrderById,getOrders,getOrderById }
+module.exports = { CreateOrder,DeleteOrderById,getOrders,getOrderById,getOrdersFalse }
 

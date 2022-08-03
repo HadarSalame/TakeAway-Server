@@ -4,20 +4,26 @@ const { model } = require('mongoose');
 const { create } = require('../Models/orderModel');
 
 //הצעת מחיר חדש
+//יוצר הצעת מחיר רק אם אין לבעל העסק הצעה כזו
+//מעדכן להזמנות הצעת מחיר חדשה
 const CreateBid = async (req, res) => {
     let Bids = req.body
     try {
 
         let Create = await new bidsModel(Bids)
+        let bid = await bidsModel.findOne({business: Bids.business });
+        console.log(bid)
+        if(bid==undefined||bid==null)
+        {
         await Create.save()
-
         const idorder= Create.order;
         const orderbid = await orderModel.findOne({ _id: idorder });
         console.log(orderbid)
         orderbid.bids.push(Create)
         const updated = await orderModel.findByIdAndUpdate(idorder, orderbid, { new: true });
-      
         res.send(updated)
+        }
+        else{   res.send("the business exist")}
     }
     catch (e) {
         res.send(e)
@@ -47,14 +53,31 @@ const getbidsByOrder = async function (req, res, next) {
           next(error);
       }
   }
+
+//אישור הצעת מחיר=סגירת עיסקה
   //עדכון הזמנה ע"פ id לצורך עדכון הסטאטוס-
+
 const updatBidsById = async function (req, res, next) {
     console.log("in update");
     try {
-        const id = req.params.id;
-        const bids = req.body;
-        const updated = await bidsModel.findByIdAndUpdate(id, bids, { new: true });
-        res.send(updated);
+        const idbid = req.params.id;
+        let bids = await bidsModel.findOne({_id: idbid });
+        console.log(bids)
+        const idorder =bids.order ;
+        let order = await orderModel.findOne({_id: idorder });
+ console.log(order)
+        if(order.StatusOrder==true)
+        {
+            res.send("the order closed")
+        }
+        else
+        {
+        bids.status=true
+        const updated1 = await bidsModel.findByIdAndUpdate(idbid, bids, { new: true });
+        order.StatusOrder=true;
+        const updated2 = await orderModel.findByIdAndUpdate(idorder, order, { new: true });
+        res.send(updated2);
+        }
     }
     catch (error) {
         next(error);
