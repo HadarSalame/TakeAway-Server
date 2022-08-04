@@ -116,14 +116,14 @@ const BusinessLogin = (req, res) => {
     let email = req.params.businessEmail
     let pass = req.params.businesspassword
     BusinessModel.findOne({ businessID: id, businessEmail: email, businesspassword: pass }).then((response) => {
-        console.log("login");
+        console.log(response);
 
         console.log(response)
         if (response == null) {
-            res.send("null")
+            res.send(response)
         }
         else {
-            res.send(true)
+            res.send(response)
         }
 
     }).catch((error) => {

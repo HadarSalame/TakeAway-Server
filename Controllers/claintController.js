@@ -72,10 +72,10 @@ const claintLogin = (req, res) => {
     claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
         console.log(response)
         if (response == null) {
-            res.send("null")
+            res.send(response)
         }
         else {
-            res.send(true)
+            res.send(response)
         }
 
     }).catch((error) => {
