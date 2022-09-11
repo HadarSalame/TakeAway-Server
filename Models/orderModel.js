@@ -10,6 +10,7 @@ const OrderSchema=mongoose.Schema({
         {type:mongoose.Schema.Types.ObjectId,ref:'Portion'}
     ],
     numInvited:{type:Number},//כמות מנות?
+    // eventAddress:{type:String},
     bids:[
         {type:mongoose.Schema.Types.ObjectId,ref:'Bids'}
     ],
