@@ -12,7 +12,7 @@ const CreateClaint = async (req, res) => {
 
         let CreateClaint = await new claintModel(claint)
         await CreateClaint.save()
-        res.send("Added successfully")
+        res.json({message:"Added successfully",CreateClaint})
     }
     catch (e) {
         res.send(e)
@@ -71,12 +71,9 @@ const claintLogin = (req, res) => {
     let pass = req.params.password
     claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
         console.log(response)
-        if (response == null) {
+      
             res.send(response)
-        }
-        else {
-            res.send(response)
-        }
+        
 
     }).catch((error) => {
         res.send('error :' + error)

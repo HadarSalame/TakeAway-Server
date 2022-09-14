@@ -16,6 +16,7 @@ console.log("uuu")
         const client = await claintModel.findOne({ _id: idClient });
         client.orders.push(Create);
         const updated = await claintModel.findByIdAndUpdate(idClient, client, { new: true });
+        res.json({message:"Added successfully",Create})
 
 
 

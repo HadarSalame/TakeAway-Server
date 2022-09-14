@@ -15,7 +15,7 @@ const CreateBusiness = async (req, res) => {
 
         let Business = await new BusinessModel(business)
         await Business.save()
-        res.send("Added successfully")
+        res.json({message:"Added successfully",Business})
         console.log("sucssec")
 
     }
@@ -112,10 +112,10 @@ const IsClear = (req, res) => {
 //התחברות לעסק
 
 const BusinessLogin = (req, res) => {
-    let id = req.params.businessID
+    // let id = req.params.businessID
     let email = req.params.businessEmail
     let pass = req.params.businesspassword
-    BusinessModel.findOne({ businessID: id, businessEmail: email, businesspassword: pass }).then((response) => {
+    BusinessModel.findOne({ businessEmail: email, businesspassword: pass }).then((response) => {
         console.log(response);
 
         console.log(response)
