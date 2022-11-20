@@ -8,11 +8,8 @@ router.get('/getClaintByEmail/:email', claintController.getClaintByEmail);
 
 
 router.get('/claintLogin/:claintEmail/:password',claintController.claintLogin);
-router.get('/UpdateClaintName/:name',claintController.UpdateClaintName);
-router.get('/UpdateClaintLastName/:Lname',claintController.UpdateClaintLastName);
-router.get('/UpdateClaintPhone/:phone',claintController.UpdateClaintPhone);
-router.get('/UpdateClaintEmail/:email',claintController.UpdateClaintEmail);
-router.get('/UpdateClaintPassword/:pass',claintController.UpdateClaintPassword);
+router.put('/UpdateClaint',claintController.UpdateClaint);
+
 
 
 module.exports=router

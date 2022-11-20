@@ -6,6 +6,7 @@ router.delete('/deleteOrder/:id',OrderController.DeleteOrderById);
 router.get('/getOrders',OrderController.getOrders);
 router.get('/getOrdersFalse',OrderController.getOrdersFalse);//שליפת כול ההזמנות שעדיין לא נענו
 router.get('/getOrderById/:id',OrderController.getOrderById);
+router.get('/getOrder/:id',OrderController.getOrder);
 
 
 

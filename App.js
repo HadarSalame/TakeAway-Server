@@ -14,6 +14,7 @@ App.use(function(req, res, next) {
   });
 const bodyParser = require("body-parser")
 App.use(bodyParser.json())
+
 const mongoose = require('mongoose')
 mongoose.connect("mongodb+srv://finallProject:finallProject@takeawaycluster.4tc2n.mongodb.net/?retryWrites=true&w=majority").then(() => {
     console.log("connect to mongo")
