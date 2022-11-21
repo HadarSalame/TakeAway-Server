@@ -91,7 +91,7 @@ const getbidsByBusiness = async function (req, res, next) {
     try {
         console.log("getbidsByBussines")
         const business = req.params.business;
-        const user = await bidsModel.find({ business: business ,status:false});
+        const user = await bidsModel.find({ business: business});
         console.log(user);
         res.send(user);
     }
