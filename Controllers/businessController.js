@@ -123,8 +123,8 @@ const BusinessLogin = (req, res) => {
         console.log(response);
 
         console.log(response)
-        if (response == null) {
-            res.send(response)
+        if (response === null) {
+            res.send('undefined')
         }
         else {
             res.send(response)

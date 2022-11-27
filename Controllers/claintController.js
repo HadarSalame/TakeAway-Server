@@ -10,13 +10,13 @@ const CreateClaint = async (req, res) => {
     console.log(claint)
     try {
         // if (!claintModel.findOne({ claintEmail: claint.claintEmail })) {
-            let CreateClaint = await new claintModel(claint)
-            await CreateClaint.save()
-            res.json({ message: "Added successfully", CreateClaint })
-        }
-        // else{
-        //     res.send("error: the user allredy exist");
-        // }
+        let CreateClaint = await new claintModel(claint)
+        await CreateClaint.save()
+        res.json({ message: "Added successfully", CreateClaint })
+    }
+    // else{
+    //     res.send("error: the user allredy exist");
+    // }
     // }
     catch (e) {
         res.send(e)
@@ -75,8 +75,12 @@ const claintLogin = (req, res) => {
     let pass = req.params.password
     claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
         console.log(response)
-
+        if (response === null)
+            res.send('undefined')
+        else
         res.send(response)
+
+
 
 
     }).catch((error) => {
@@ -91,7 +95,7 @@ const UpdateClaint = async (req, res) => {
         console.log('update user!!', u);
         return res.status(201).json(u)
     }).catch(error => {
-        console.error('err update user'+error)
+        console.error('err update user' + error)
     })
 
 }
@@ -99,5 +103,5 @@ const UpdateClaint = async (req, res) => {
 
 //אימות סיסמה
 
-module.exports = { CreateClaint, DeleteClaintById, getClaint, getClaintByEmail, claintLogin,UpdateClaint }
+module.exports = { CreateClaint, DeleteClaintById, getClaint, getClaintByEmail, claintLogin, UpdateClaint }
 
