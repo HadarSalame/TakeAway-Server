@@ -8,7 +8,8 @@ const BusinessSchema=mongoose.Schema({
     businessEmail:{type:String,require},
     businessAddress:{type:String,require},
     businesspassword:{type:String,minlegnth:8,require},
-    businessKosher:{type:String,require},
+    confirmPassword:{type:String,minlegnth:8,require},
+    businessKosher:[{type:String,require}],
     businessKosherCertificate:{type:String,require},
     logoBusiness:{type:String,require},
     orders:[

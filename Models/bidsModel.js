@@ -6,8 +6,8 @@ const bidsSchema=mongoose.Schema({
     business:{type:mongoose.Schema.Types.ObjectId,ref:'Business'} ,
     order:{type:mongoose.Schema.Types.ObjectId,ref:'Order'} ,
     marks:{type:String},//הערות
-    status:{type:Boolean}//סטטוס הצעה - האם הם סוגרים יחד או לא
-    
+    status:{type:Boolean},//סטטוס הצעה - האם הם סוגרים יחד או לא
+    isShow:{type:Boolean,default:false}
     
 
 

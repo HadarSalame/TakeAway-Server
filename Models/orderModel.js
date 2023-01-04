@@ -4,8 +4,8 @@ const OrderSchema=mongoose.Schema({
     // ordertID:{type:Number},
     // businessID:{type:String},
     claintID: {type:mongoose.Schema.Types.ObjectId,ref:'Claint'},
-    orderDate:{type:String,default: new Date().toISOString().split('T')[0]},
-    eventDate:{type:String,require},
+    orderDate:{type:Date,default: new Date().toISOString().split('T')[0]},
+    eventDate:{type:Date,require},
     portion:[
         {type:mongoose.Schema.Types.ObjectId,ref:'Portion'}
     ],

@@ -4,33 +4,40 @@ const categoryModel = require('../Models/categoryModel');
 const portionModel = require('../Models/portionModel');
 const { model } = require('mongoose');
 
-//משתמש חדש
+
 const CreateClaint = async (req, res) => {
     let claint = req.body
     console.log(claint)
     try {
-        // if (!claintModel.findOne({ claintEmail: claint.claintEmail })) {
-        let CreateClaint = await new claintModel(claint)
-        await CreateClaint.save()
-        res.json({ message: "Added successfully", CreateClaint })
+        if (!await claintModel.findOne({ claintEmail: claint.claintEmail }) && !await BusinessModel.findOne({ businessEmail: claint.claintEmail })) {
+            if (claint.password === claint.confirmPassword) {
+                let CreateClaint = await new claintModel(claint)
+                await CreateClaint.save()
+                res.json({ message: "Added successfully", CreateClaint })
+            }
+            else {
+                res.send('password')
+            }
+        }
+        else {
+            res.send("exist");
+        }
     }
-    // else{
-    //     res.send("error: the user allredy exist");
-    // }
-    // }
     catch (e) {
         res.send(e)
     }
 
 }
+
+
 //מחיקת לקוח
 const DeleteClaintById = async (req, res) => {
-
+    console.log(res.params);
     try {
         const id = req.params.id;
         console.log(id)
-        const claint = await claintModel.findOneAndDelete(id);
-        console.log(claint)
+        const claint = await claintModel.findOneAndDelete({ _id: id });
+        console.log(claint + 'done')
         res.send(claint);
     }
     catch (error) {
@@ -70,7 +77,7 @@ const getClaintByEmail = async function (req, res, next) {
 
 //התחברות ללקוח
 const claintLogin = (req, res) => {
-    console.log("login");
+    // console.log("login");
     let email = req.params.claintEmail
     let pass = req.params.password
     claintModel.findOne({ claintEmail: email, password: pass }).then((response) => {
@@ -78,10 +85,7 @@ const claintLogin = (req, res) => {
         if (response === null)
             res.send('undefined')
         else
-        res.send(response)
-
-
-
+            res.send(response)
 
     }).catch((error) => {
         res.send('error :' + error)
@@ -91,9 +95,10 @@ const claintLogin = (req, res) => {
 //עדכון  משתמש
 const UpdateClaint = async (req, res) => {
     console.log(req.params);
-    await claintModel.updateOne({ _id: req.params._id }, req.body).then((u) => {
+    console.log(req.body);
+    await claintModel.updateOne({ _id: req.params.id }, req.body).then((u) => {
         console.log('update user!!', u);
-        return res.status(201).json(u)
+        return res.status(200).json(u)
     }).catch(error => {
         console.error('err update user' + error)
     })

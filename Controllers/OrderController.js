@@ -2,29 +2,19 @@ const orderModel = require('../Models/orderModel');
 const claintModel = require('../Models/claintModel');
 const { model } = require('mongoose');
 
-//הזמנה חדשה
+
 const CreateOrder = async (req, res) => {
     let order = req.body
     try {
         let Create = await new orderModel(order)
         console.log(Create)
-         Create.save().then((()=>{
-             res.json({message:"Added successfully",Create});
-             res.status(200).send(updated )
-         })
-)
-        
-
-
-        const idClient= Create.claintID;
-        const client = await claintModel.findOne({ _id: idClient });
-        client.orders.push(Create);
-        const updated = await claintModel.findByIdAndUpdate(idClient, client, { new: true });
-
-
-
-
-      
+        Create.save().then((async () => {
+            const idClient = Create.claintID;
+            const client = await claintModel.findOne({ _id: idClient });
+            client.orders.push(Create);
+            await claintModel.findByIdAndUpdate(idClient, client, { new: true });
+            res.json({ message: "Added successfully", Create });
+        }))
     }
     catch (e) {
         res.status(400).send(e)
@@ -32,11 +22,14 @@ const CreateOrder = async (req, res) => {
 
 }
 //מחיקת הזמנה
-const DeleteOrderById = async (req, res)=> {
+const DeleteOrderById = async (req, res) => {
+    console.log("log 1     " + req.params._id);
     try {
-        const id = req.params.id;
-        const order = await orderModel.findOneAndDelete(id);
-        res.send(order);
+        const idorder = req.params._id;
+        console.log("idorder    " + idorder);
+        await orderModel.findOneAndDelete({ _id: idorder });
+        res.send('delete');
+        console.log("done" + idorder);
     }
     catch (error) {
         console.log(error);
@@ -44,7 +37,7 @@ const DeleteOrderById = async (req, res)=> {
 
 }
 // שליפת כל ההזמנות
-const getOrders= async function (req, res, next) {
+const getOrders = async function (req, res, next) {
     try {
         const users = await orderModel.find();
         res.send(users);
@@ -53,10 +46,13 @@ const getOrders= async function (req, res, next) {
         next(error);
     }
 }
-// שליפת כל ההזמנות שעדין לא נענו 
-const getOrdersFalse= async function (req, res, next) {
+
+
+
+const getOrdersFalse = async function (req, res, next) {
     try {
-        const users = await orderModel.find({StatusOrder:false}).populate('claintID');
+        const today = new Date();
+        const users = await orderModel.find({ StatusOrder: false, eventDate: { $gte: today } }).populate(['claintID', 'bids']);
         console.log(users);
         res.send(users);
     }
@@ -64,11 +60,13 @@ const getOrdersFalse= async function (req, res, next) {
         next(error);
     }
 }
-const getOrder= async function (req, res, next) {
+
+
+const getOrder = async function (req, res, next) {
     try {
         const order = await orderModel.findById(req.params.id).populate({
-            path : 'portion'
-          });
+            path: 'portion'
+        });
         console.log(order)
 
         res.send(order);
@@ -84,7 +82,7 @@ const getOrderById = async function (req, res, next) {
         const idClaint = req.params.id;
         const order = await orderModel.find({ claintID: idClaint })
 
-        console.log(order);
+        // console.log(order);
         res.send(order);
     }
     catch (error) {
@@ -94,5 +92,5 @@ const getOrderById = async function (req, res, next) {
 
 
 
-module.exports = { CreateOrder,DeleteOrderById,getOrders,getOrderById,getOrdersFalse ,getOrder}
+module.exports = { CreateOrder, DeleteOrderById, getOrders, getOrderById, getOrdersFalse, getOrder }
 

@@ -24,8 +24,9 @@ const CreatePortion = async (req, res) => {
 //  שליפת כל המנות 
 const getPortion= async function (req, res, next) {
     try {
-        const users = await portionModel.find();
-        res.send(users);
+        const portion = await portionModel.find();
+        console.log(portion);
+        res.send(portion);
     }
     catch (error) {
         next(error);

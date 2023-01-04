@@ -2,6 +2,7 @@ const bidsModel = require('../Models/bidsModel');
 const orderModel = require('../Models/orderModel');
 const { model } = require('mongoose');
 const { create } = require('../Models/orderModel');
+const businessModel = require('../Models/businessModel');
 
 //הצעת מחיר חדש
 //יוצר הצעת מחיר רק אם אין לבעל העסק הצעה כזו
@@ -13,20 +14,22 @@ const CreateBid = async (req, res) => {
 
         let Create = await new bidsModel(Bids)
         let bid = await bidsModel.findOne({ business: Bids.business });
-        console.log(bid)
-        if (bid == undefined || bid == null) {
+        // let isOrderExist=await businessModel.findOne({orders:Bids.order});
+        // console.log('isOrderExist',isOrderExist)/
+        console.log('bid', bid)
+        if (bid !== undefined || bid !== null) {
             await Create.save()
             const idorder = Create.order;
             const orderbid = await orderModel.findOne({ _id: idorder });
-            console.log(orderbid)
+            console.log('orderbid', orderbid)
             orderbid.bids.push(Create)
             const updated = await orderModel.findByIdAndUpdate(idorder, orderbid, { new: true });
             res.send(updated)
-            console.log('working');
+            console.log('working', updated);
         }
         else {
-            res.send("the business exist")
-            console.log("the business exist")
+            res.send("You have already sent an offer for this order")
+            console.log("You have already sent an offer for this order")
         }
     }
     catch (e) {
@@ -37,9 +40,10 @@ const CreateBid = async (req, res) => {
 //מחיקת הצעת מחיר
 const DeleteBidById = async (req, res) => {
     try {
-        const id = req.params.id;
-        const bid = await bidsModel.findOneAndDelete(id);
-        res.send(bid);
+        const id = req.params._id;
+        const bid = await bidsModel.findOneAndDelete({ _id: id });
+        console.log(bid);
+        res.send('delete');
     }
     catch (error) {
         console.log(error);
@@ -50,7 +54,7 @@ const getbidsByOrder = async function (req, res, next) {
     try {
         console.log("iii")
         const order = req.params.order;
-        const user = await bidsModel.find({ order: order });
+        const user = await bidsModel.find({ order: order }).populate('business').populate('order');
         console.log(user);
         res.send(user);
     }
@@ -91,7 +95,7 @@ const getbidsByBusiness = async function (req, res, next) {
     try {
         console.log("getbidsByBussines")
         const business = req.params.business;
-        const user = await bidsModel.find({ business: business});
+        const user = await (await bidsModel.find({ business: business }));
         console.log(user);
         res.send(user);
     }
@@ -114,7 +118,18 @@ const getTrueBids = async function (req, res, next) {
     }
 }
 
+// עדכון שראה את ההצעה שאושרה
 
+const setShowBids = async function (req, res, next) {
+    const ids = req.body
+    try {
+        await bidsModel.updateMany({ _id: { $in: ids } }, { isShow: true });
+        res.send('setShowBids');
 
-module.exports = { CreateBid, DeleteBidById, getbidsByOrder, updatBidsById,getTrueBids,getbidsByBusiness }
+    }
+    catch (error) {
+        next(error);
+    }
+}
+module.exports = { CreateBid, DeleteBidById, getbidsByOrder, updatBidsById, getTrueBids, getbidsByBusiness, setShowBids }
 

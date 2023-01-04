@@ -11,14 +11,21 @@ const orderModel = require('../Models/orderModel');
 const CreateBusiness = async (req, res) => {
 
     let business = req.body
+    console.log(business);
     try {
-        if (!businessModel.findOne({ businessEmail: business.businessEmail })) {
-            let Business = await new BusinessModel(business)
-            await Business.save()
-            res.json({ message: "Added successfully", Business })
-            console.log("sucssec")
+        if (!await businessModel.findOne({ businessEmail: business.businessEmail })&& 
+        !await claintModel.findOne({ claintEmail: business.businessEmail })) {
+            if (business.businesspassword === business.confirmPassword) {
+                let Business = await new BusinessModel(business)
+                await Business.save()
+                res.json({ message: "Added successfully", Business })
+                console.log("sucssec")
+            }
+            else{
+                res.send('password')
+            }
         }
-        else{
+        else {
             res.send("the bussines allredy exist")
         }
     }
@@ -122,7 +129,6 @@ const BusinessLogin = (req, res) => {
     BusinessModel.findOne({ businessEmail: email, businesspassword: pass }).then((response) => {
         console.log(response);
 
-        console.log(response)
         if (response === null) {
             res.send('undefined')
         }
@@ -137,10 +143,10 @@ const BusinessLogin = (req, res) => {
 
 //עדכון  העסק
 const UpdateBusiness = async (req, res) => {
-    console.log(req.params);
-    await BusinessModel.updateOne({ _id: req.params._id }, req.body).then((u) => {
+
+    await BusinessModel.updateOne({ _id: req.params.id }, req.body).then((u) => {
         console.log('update bus!!', u);
-        return res.status(201).json(u)
+        return res.status(200).json(u)
     }).catch(error => {
         console.error('err update user' + error)
     })
