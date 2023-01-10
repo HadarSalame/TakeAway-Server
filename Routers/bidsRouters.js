@@ -8,6 +8,7 @@ router.put('/updatBidsById/:id', bidsController.updatBidsById)
 router.get('/getTrueBids/:status', bidsController.getTrueBids)
 router.get('/getbidsByBusiness/:business', bidsController.getbidsByBusiness)
 router.post('/setShowBids', bidsController.setShowBids);
+router.post('/updateIsActiveBid/:id', bidsController.updateIsActiveBid);
 
 
 

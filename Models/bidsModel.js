@@ -7,7 +7,8 @@ const bidsSchema=mongoose.Schema({
     order:{type:mongoose.Schema.Types.ObjectId,ref:'Order'} ,
     marks:{type:String},//הערות
     status:{type:Boolean},//סטטוס הצעה - האם הם סוגרים יחד או לא
-    isShow:{type:Boolean,default:false}
+    isShow:{type:Boolean,default:false},
+    isActive:{type:Boolean,default:true}
     
 
 

@@ -95,7 +95,14 @@ const getbidsByBusiness = async function (req, res, next) {
     try {
         console.log("getbidsByBussines")
         const business = req.params.business;
-        const user = await (await bidsModel.find({ business: business }));
+        const user = await bidsModel.find({ business: business })
+            .populate({
+                path: 'order',
+                populate: {
+                    path: 'claintID'
+                }
+            })
+
         console.log(user);
         res.send(user);
     }
@@ -131,5 +138,17 @@ const setShowBids = async function (req, res, next) {
         next(error);
     }
 }
-module.exports = { CreateBid, DeleteBidById, getbidsByOrder, updatBidsById, getTrueBids, getbidsByBusiness, setShowBids }
+// ביטול הצעה
+const updateIsActiveBid = async function (req, res, next) {
+    const id = req.params.id
+    try {
+        await bidsModel.findByIdAndUpdate(id, { isActive: false });
+        res.send('updateIsActiveBid');
+
+    }
+    catch (error) {
+        next(error);
+    }
+}
+module.exports = { CreateBid, DeleteBidById, getbidsByOrder, updatBidsById, getTrueBids, updateIsActiveBid, getbidsByBusiness, setShowBids }
 
